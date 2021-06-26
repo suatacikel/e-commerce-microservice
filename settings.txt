@@ -1,0 +1,8 @@
+services
+	product
+		database
+			images: couchbase:enterprise-6.6.2
+			admin user name : Administrator
+			password : 123456
+			port : 8091 : 8091
+			cluster name : cb01

@@ -1,3 +1,4 @@
+using Couchbase.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Product.API.Services;
+using Product.API.Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,11 @@ namespace Product.API
         {
 
             services.AddControllers();
+
+            services.AddCouchbase(Configuration.GetSection("CouchbaseConnectionSettings"));
+
+            services.AddScoped<IProductBrandService, ProductBrandService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
@@ -34,7 +42,7 @@ namespace Product.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +59,8 @@ namespace Product.API
             {
                 endpoints.MapControllers();
             });
+
+            lifetime.ApplicationStopped.Register(() => { app.ApplicationServices.GetRequiredService<ICouchbaseLifetimeService>().Close(); });
         }
     }
 }
