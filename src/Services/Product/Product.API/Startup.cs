@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Product.API.Model;
+using Product.API.Repository;
 using Product.API.Services;
 using Product.API.Services.Abstractions;
 using System;
@@ -28,10 +30,18 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(IRepository<>), typeof(CouchbaseRepository<>));
 
             services.AddControllers();
 
-            services.AddCouchbase(Configuration.GetSection("CouchbaseConnectionSettings"));
+            //read in configuration to connect to the database
+            services.Configure<CouchbaseConfig>(Configuration.GetSection("Couchbase"));
+            
+            //register the configuration 
+            services.AddCouchbase(Configuration.GetSection("Couchbase"));
+
+            //register the service to handle bucket, collection, scope, and index creation
+            //services.AddTransient<DatabaseService>();
 
             services.AddScoped<IProductBrandService, ProductBrandService>();
 

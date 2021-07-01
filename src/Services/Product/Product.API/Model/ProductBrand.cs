@@ -1,8 +1,9 @@
-﻿namespace Product.API.Model
+﻿using System;
+
+namespace Product.API.Model
 {
-    public class ProductBrand
+    public class ProductBrand : EntityBase<ProductBrand>
     {
-        public int Id { get; set; }
         public string Brand { get; set; }
     }
 }

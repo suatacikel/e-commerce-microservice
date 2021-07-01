@@ -7,10 +7,11 @@ namespace Product.API.Services.Abstractions
 {
     public interface IProductBrandService
     {
-        Task<ResponseDto<List<ProductBrand>>> GetAllAsync();
-
+        Task<ResponseDto<List<ProductBrand>>> GetListAsync(ProductBrandListRequestQuery productBrandListRequestQuery);
+        Task<ResponseDto<ProductBrand>> GetAsync(string id);
         Task<ResponseDto<ProductBrand>> CreateAsync(ProductBrand productBrand);
+        Task<ResponseDto<ProductBrand>> UpdateAsync(string id, ProductBrand productBrand);
+        Task<ResponseDto<ProductBrand>> DeleteAsync(string id);
 
-        Task<ResponseDto<ProductBrand>> GetByIdAsync(string Id);
     }
 }
