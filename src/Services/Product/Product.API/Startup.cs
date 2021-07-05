@@ -1,20 +1,14 @@
 using Couchbase.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Product.API.Model;
 using Product.API.Repository;
 using Product.API.Services;
 using Product.API.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Product.API
 {
@@ -30,7 +24,6 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(CouchbaseRepository<>));
 
             services.AddControllers();
 
@@ -40,11 +33,10 @@ namespace Product.API
             //register the configuration 
             services.AddCouchbase(Configuration.GetSection("Couchbase"));
 
-            //register the service to handle bucket, collection, scope, and index creation
-            //services.AddTransient<DatabaseService>();
-
+            services.AddScoped(typeof(IRepository<>), typeof(CouchbaseRepository<>));
             services.AddScoped<IProductBrandService, ProductBrandService>();
             services.AddScoped<IProductTypeService, ProductTypeService>();
+            services.AddScoped<IProductItemService, ProductItemService>();
 
             services.AddSwaggerGen(c =>
             {

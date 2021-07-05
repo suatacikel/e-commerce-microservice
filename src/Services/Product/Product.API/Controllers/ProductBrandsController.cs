@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Product.API.Services.Abstractions;
 using System.Threading.Tasks;
-using Product.API.Model;
+using Product.API.Model.ProductBrandModel;
 
 namespace Product.API.Controllers
 {

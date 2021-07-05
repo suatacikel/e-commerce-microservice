@@ -1,7 +1,9 @@
 ﻿using Product.API.Exceptions;
+using Product.API.Model.ProductBrandModel;
+using Product.API.Model.ProductTypeModel;
 using System;
 
-namespace Product.API.Model
+namespace Product.API.Model.ProductItemModel
 {
     public class ProductItem : EntityBase<ProductItem>
     {
@@ -17,11 +19,7 @@ namespace Product.API.Model
 
         public int ProductTypeId { get; set; }
 
-        public ProductType ProductType { get; set; }
-
         public int ProductBrandId { get; set; }
-
-        public ProductBrand ProductBrand { get; set; }
 
         // Quantity in stock
         public int AvailableStock { get; set; }

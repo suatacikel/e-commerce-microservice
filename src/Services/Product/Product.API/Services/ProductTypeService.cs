@@ -1,4 +1,5 @@
 ﻿using Product.API.Model;
+using Product.API.Model.ProductTypeModel;
 using Product.API.Repository;
 using Product.API.Services.Abstractions;
 using Shared.Dtos;
@@ -38,10 +39,10 @@ namespace Product.API.Services
             return ResponseDto<ProductType>.Success(200);
         }
 
-        public async Task<ResponseDto<IEnumerable<ProductType>>> GetListAsync()
+        public async Task<ResponseDto<List<ProductType>>> GetListAsync()
         {
             var results = await _productTypeRepository.GetListAsync(new RequestQuery());
-            return ResponseDto<IEnumerable<ProductType>>.Success(results, 200);
+            return ResponseDto<List<ProductType>>.Success(results, 200);
         }
     }
 }

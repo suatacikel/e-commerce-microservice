@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Product.API.Model
+﻿namespace Product.API.Model.ProductBrandModel
 {
     public class ProductBrand : EntityBase<ProductBrand>
     {

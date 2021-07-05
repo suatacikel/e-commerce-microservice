@@ -23,7 +23,7 @@ namespace Product.API.Repository
             _couchbaseConfig = options.Value;
         }
         
-        public async Task<IEnumerable<T>> GetListAsync(RequestQuery query)
+        public async Task<List<T>> GetListAsync(RequestQuery query)
         {
             var cluster = await _clusterProvider.GetClusterAsync();
             var queryResult = $"SELECT products.* FROM `products` " +

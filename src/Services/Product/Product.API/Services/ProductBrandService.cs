@@ -1,4 +1,5 @@
 ﻿using Product.API.Model;
+using Product.API.Model.ProductBrandModel;
 using Product.API.Repository;
 using Product.API.Services.Abstractions;
 using Shared.Dtos;
@@ -38,10 +39,10 @@ namespace Product.API.Services
             return ResponseDto<ProductBrand>.Success(200);
         }
 
-        public async Task<ResponseDto<IEnumerable<ProductBrand>>> GetListAsync()
+        public async Task<ResponseDto<List<ProductBrand>>> GetListAsync()
         {
             var results = await _productBrandRepository.GetListAsync(new RequestQuery());
-            return ResponseDto<IEnumerable<ProductBrand>>.Success(results, 200);
+            return ResponseDto<List<ProductBrand>>.Success(results, 200);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Product.API.Model
+﻿namespace Product.API.Model.ProductTypeModel
 {
     public class ProductType : EntityBase<ProductType>
     {
