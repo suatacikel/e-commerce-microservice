@@ -44,6 +44,7 @@ namespace Product.API
             //services.AddTransient<DatabaseService>();
 
             services.AddScoped<IProductBrandService, ProductBrandService>();
+            services.AddScoped<IProductTypeService, ProductTypeService>();
 
             services.AddSwaggerGen(c =>
             {

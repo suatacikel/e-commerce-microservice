@@ -1,16 +1,8 @@
-﻿using Couchbase.Extensions.DependencyInjection;
-using Couchbase.KeyValue;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Product.API.Model;
+﻿using Product.API.Model;
 using Product.API.Repository;
 using Product.API.Services.Abstractions;
 using Shared.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Product.API.Services
@@ -39,25 +31,17 @@ namespace Product.API.Services
             var result = await _productBrandRepository.UpdateAsync(id, productBrand);
             return ResponseDto<ProductBrand>.Success(result, 200);
         }
+
         public async Task<ResponseDto<ProductBrand>> DeleteAsync(string id)
         {
             await _productBrandRepository.DeleteAsync(id);
             return ResponseDto<ProductBrand>.Success(200);
         }
 
-        public async Task<ResponseDto<List<ProductBrand>>> GetListAsync(ProductBrandListRequestQuery productBrandListRequestQuery)
+        public async Task<ResponseDto<IEnumerable<ProductBrand>>> GetListAsync()
         {
-            //var cluster = await _clusterProvider.GetClusterAsync();
-            //var query = $"SELECT p. * FROM {_couchbaseConfig.BucketName}.{_couchbaseConfig.ScopeName}.{_couchbaseConfig.CollectionName} p WHERE lower(p.Brand) LIKE '%{productBrandListRequestQuery.Search.ToLower()}%' OR lower(p.Brand) LIKE '%{productBrandListRequestQuery.Search.ToLower()}%' LIMIT {productBrandListRequestQuery.Limit} OFFSET {productBrandListRequestQuery.Skip}";
-
-            //var results = await cluster.QueryAsync<ProductBrand>(query);
-            //var items = await results.Rows.ToListAsync();
-
-            //return ResponseDto<List<ProductBrand>>.Success(items, 200);
-
-            throw new Exception();
+            var results = await _productBrandRepository.GetListAsync(new RequestQuery());
+            return ResponseDto<IEnumerable<ProductBrand>>.Success(results, 200);
         }
-
-       
     }
 }

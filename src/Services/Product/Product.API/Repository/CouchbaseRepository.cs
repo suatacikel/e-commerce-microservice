@@ -22,7 +22,20 @@ namespace Product.API.Repository
             _clusterProvider = clusterProvider;
             _couchbaseConfig = options.Value;
         }
-
+        
+        public async Task<IEnumerable<T>> GetListAsync(RequestQuery query)
+        {
+            var cluster = await _clusterProvider.GetClusterAsync();
+            var queryResult = $"SELECT products.* FROM `products` " +
+                              $"WHERE docType=\"{typeof(T).Name.ToLower()}\" " +
+                              (!String.IsNullOrEmpty(query.WhereClause) ? $"AND ({query.WhereClause}) " : "") +
+                              $"LIMIT {query.Limit} " +
+                              $"OFFSET {query.Skip}";
+            var results = await cluster.QueryAsync<T>(queryResult);
+            var items = await results.Rows.ToListAsync();
+            return items;
+        }        
+        
         public async Task<T> GetAsync(string id)
         {
             try
@@ -109,6 +122,5 @@ namespace Product.API.Repository
             var item = result.Content;
             return item.ToString();
         }
-
     }
 }

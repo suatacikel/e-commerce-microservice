@@ -8,19 +8,19 @@ namespace Product.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ProductBrandsController : CustomBaseController
+    public class ProductTypesController : CustomBaseController
     {
-        private readonly IProductBrandService _productBrandService;
+        private readonly IProductTypeService _productTypeService;
 
-        public ProductBrandsController(IProductBrandService productBrandService)
+        public ProductTypesController(IProductTypeService productTypeService)
         {
-            _productBrandService = productBrandService;
+            _productTypeService = productTypeService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _productBrandService.GetListAsync();
+            var response = await _productTypeService.GetListAsync();
 
             return CreateActionResultInstance(response);
         }
@@ -28,23 +28,23 @@ namespace Product.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            var response = await _productBrandService.GetAsync(id);
+            var response = await _productTypeService.GetAsync(id);
 
             return CreateActionResultInstance(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductBrand productBrand)
+        public async Task<IActionResult> Create(ProductType productType)
         {
-            var response = await _productBrandService.CreateAsync(productBrand);
+            var response = await _productTypeService.CreateAsync(productType);
 
             return CreateActionResultInstance(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(ProductBrand productBrand)
+        public async Task<IActionResult> Update(ProductType productType)
         {
-            var response = await _productBrandService.UpdateAsync(productBrand.Id,productBrand);
+            var response = await _productTypeService.UpdateAsync(productType.Id, productType);
 
             return CreateActionResultInstance(response);
         }
@@ -52,7 +52,7 @@ namespace Product.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var response = await _productBrandService.DeleteAsync(id);
+            var response = await _productTypeService.DeleteAsync(id);
 
             return CreateActionResultInstance(response);
         }
