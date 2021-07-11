@@ -2,9 +2,6 @@
 
 namespace Product.API.Exceptions
 {
-    /// <summary>
-    /// exception type for app exception
-    /// </summary>
     public class ProductDomainException : Exception
     {
         public ProductDomainException()
