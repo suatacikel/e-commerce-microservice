@@ -1,4 +1,4 @@
-﻿using Basket.API.Model;
+﻿using Basket.API.Dtos;
 using Basket.API.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ControllerBases;
@@ -12,25 +12,31 @@ namespace Basket.API.Controllers
     public class BasketsController : CustomBaseController
     {
         private readonly IBasketService _basketService;
-        private readonly IIdentityService _identityService;
 
-        public BasketsController(IIdentityService identityService, IBasketService basketService)
+        public BasketsController(IBasketService basketService)
         {
-            _identityService = identityService;
             _basketService = basketService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetBasket()
         {
-            return CreateActionResultInstance(await _basketService.GetBasketAsync(_identityService.GetUserId));
+            return CreateActionResultInstance(await _basketService.GetBasketAsync());
         }
 
         [HttpPost]
         public async Task<IActionResult> SaveOrUpdateBasket(BasketDto basketDto)
         {
-            basketDto.BuyerId = _identityService.GetUserId;
             var response = await _basketService.SaveOrUpdateAsync(basketDto);
+
+            return CreateActionResultInstance(response);
+        }
+
+        [HttpPost]
+        [Route("/api/v1/[controller]/[action]")]
+        public async Task<IActionResult> ApplyDiscount(DiscountApplyDto discountApplyDto)
+        {
+            var response = await _basketService.ApplyDiscount(discountApplyDto);
 
             return CreateActionResultInstance(response);
         }
@@ -38,7 +44,7 @@ namespace Basket.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete()
         {
-            return CreateActionResultInstance(await _basketService.DeleteAsync(_identityService.GetUserId));
+            return CreateActionResultInstance(await _basketService.DeleteAsync());
         }
     }
 }
