@@ -2,7 +2,6 @@
 using Basket.API.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ControllerBases;
-using Shared.Services;
 using System.Threading.Tasks;
 
 namespace Basket.API.Controllers

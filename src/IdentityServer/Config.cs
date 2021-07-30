@@ -17,7 +17,8 @@ namespace IdentityServer
                 new ApiResource("resource_product"){Scopes={ "product_permission"}},
                   new ApiResource("resource_basket"){Scopes={ "basket_permission"}},
                     new ApiResource("resource_discount"){Scopes={ "discount_permission"}},
-                      new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
+                      new ApiResource("resource_order"){Scopes={ "order_permission"}},
+                        new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
            };
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
@@ -34,7 +35,8 @@ namespace IdentityServer
                 new ApiScope("product_permission","product api permission"),
                   new ApiScope("basket_permission","basket api permission"),
                     new ApiScope("discount_permission","discount api permission"),
-                      new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
+                      new ApiScope("order_permission","order api permission"),
+                        new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
         public static IEnumerable<Client> Clients =>
@@ -56,7 +58,7 @@ namespace IdentityServer
                     AllowOfflineAccess = true,
                     ClientSecrets={ new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = {"basket_permission","discount_permission",
+                    AllowedScopes = {"basket_permission","discount_permission","order_permission",
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId, 
                         IdentityServerConstants.StandardScopes.Profile,
